@@ -6,7 +6,7 @@ import { Logo } from "./logo";
 export function PlantCard({ plant }: { plant: PlantType }) {
   return (
     <View style={styles.plantCard}>
-      <Logo size={100} />
+      <Logo imageUri={plant.imageUri} size={100} />
       <View style={styles.details}>
         <Text numberOfLines={1} style={styles.plantName}>
           {plant.name}

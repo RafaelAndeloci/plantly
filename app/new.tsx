@@ -2,12 +2,22 @@ import { Button } from "@/components/Button";
 import { Logo } from "@/components/logo";
 import { usePlantStore } from "@/store/plants-store";
 import { theme } from "@/theme";
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function NewScreen() {
+  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [name, setName] = useState("");
   const [days, setDays] = useState("");
   const addPlant = usePlantStore((state) => state.addPlant);
@@ -31,9 +41,24 @@ export default function NewScreen() {
       );
     }
 
-    addPlant(name, Number(days));
+    addPlant(name, Number(days), imageUri);
     router.navigate("/");
   };
+
+  async function handleChooseImage() {
+    if (Platform.OS === "web") return;
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImageUri(result.assets[0].uri);
+    }
+  }
 
   return (
     <KeyboardAwareScrollView
@@ -41,9 +66,13 @@ export default function NewScreen() {
       keyboardShouldPersistTaps="handled"
       style={styles.container}
     >
-      <View style={{ marginTop: 56, alignItems: "center" }}>
-        <Logo />
-      </View>
+      <TouchableOpacity
+        onPress={handleChooseImage}
+        activeOpacity={0.8}
+        style={{ marginTop: 56, alignItems: "center" }}
+      >
+        <Logo imageUri={imageUri} />
+      </TouchableOpacity>
 
       <View style={styles.formContainer}>
         <Text style={styles.label}>Name</Text>
