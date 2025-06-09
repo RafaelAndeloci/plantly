@@ -1,5 +1,4 @@
 import { Stack } from "expo-router";
-
 export default function Layout() {
   return (
     <Stack>
@@ -15,6 +14,13 @@ export default function Layout() {
         options={{
           headerShown: false,
           animation: "fade",
+        }}
+      />
+      <Stack.Screen
+        name="new"
+        options={{
+          presentation: "modal",
+          title: "New Plant",
         }}
       />
     </Stack>
