@@ -1,8 +1,10 @@
 import { Button } from "@/components/Button";
 import { useUserStore } from "@/store/user-store";
 import { theme } from "@/theme";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet } from "react-native";
 
 export default function Onboarding() {
   const router = useRouter();
@@ -13,9 +15,19 @@ export default function Onboarding() {
   }
 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      colors={[
+        theme.colors.green,
+        theme.colors.appleGreen,
+        theme.colors.limeGreen,
+      ]}
+      style={styles.container}
+    >
+      <StatusBar style="light" />
       <Button title="Let me in!" onPress={handlePress} />
-    </View>
+    </LinearGradient>
   );
 }
 
