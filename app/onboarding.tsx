@@ -5,7 +5,7 @@ import { theme } from "@/theme";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 
 export default function Onboarding() {
   const router = useRouter();
@@ -55,7 +55,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   tagLine: {
-    fontSize: 24,
+    fontSize: 34,
+    fontFamily: Platform.select({
+      android: "Caveat_400Regular",
+      ios: "Caveat-Regular",
+    }),
     paddingHorizontal: 12,
     color: theme.colors.white,
     textAlign: "center",
